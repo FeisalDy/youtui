@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model books {
+  id           Int       @id
+  url          String?   @db.VarChar(255)
+  name         String?   @db.VarChar(255)
+  en_name      String?   @db.VarChar(255)
+  author       String?   @db.VarChar(255)
+  category     String?   @db.VarChar(255)
+  length       Int?
+  rating_count Int?
+  rating_avg   Float?
+  update_date  DateTime? @db.Date
+  cover_url    String?   @db.VarChar(255)
+  description  String?   @db.Text
+}
+
+model comments {
+  id         Int     @id
+  comment_id String? @db.VarChar(255)
+  username   String? @db.VarChar(255)
+  user_id    Int?
+  book_id    Int?
+  rate       Int?
+  message    String?
+  starnum    Int?
+}
+
+model en_books {
+  id           Int       @id
+  url          String?   @db.VarChar(255)
+  name         String?   @db.VarChar(255)
+  cn_name      String?   @db.VarChar(255)
+  author       String?   @db.VarChar(255)
+  category     String?   @db.VarChar(255)
+  length       Int?
+  rating_count Int?
+  rating_avg   Float?
+  update_date  DateTime? @db.Date
+  cover_url    String?   @db.VarChar(255)
+  description  String?   @db.Text
+}
+
+model en_comments {
+  id         Int     @id
+  comment_id String? @db.VarChar(255)
+  username   String? @db.VarChar(255)
+  user_id    Int?
+  book_id    Int?
+  rate       Int?
+  message    String?
+  starnum    Int?
+}
+
+model tui_json {
+ id Int @id @default(autoincrement())
+ data Json @db.JsonB
+}
