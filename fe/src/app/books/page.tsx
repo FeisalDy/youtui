@@ -5,8 +5,7 @@ import {
   QueryClient
 } from '@tanstack/react-query'
 import { getBooks } from '@/server/getBooks'
-import { redirect } from 'next/navigation'
-import { DefaultPagination } from '@/components/pagination/Pagination'
+// import { redirect } from 'next/navigation'
 
 export default async function Home ({ searchParams }: any) {
   const queryClient = new QueryClient()
@@ -18,21 +17,11 @@ export default async function Home ({ searchParams }: any) {
     queryFn: () => getBooks(page)
   })
 
-  const navigate = (page: number, isNext: boolean) => {
-    if (isNext) {
-      redirect(`/books?page=${page + 1}`)
-    }
-    if (!isNext) {
-      redirect(`/books?page=${page - 1}`)
-    }
-  }
-
   return (
     <>
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Books page={page} />
       </HydrationBoundary>
-      <DefaultPagination />
     </>
   )
 }

@@ -1,12 +1,15 @@
 import type { Config } from 'tailwindcss'
 import type { PluginAPI } from 'tailwindcss/types/config'
+import { nextui } from '@nextui-org/react'
+// const { nextui } = require('@nextui-org/react')
 
 const config: Config = {
   darkMode: 'class',
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}'
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}'
   ],
   theme: {
     container: {
@@ -27,6 +30,9 @@ const config: Config = {
     }
   },
   plugins: [
+    nextui({
+      addCommonColors: true
+    }),
     require('@tailwindcss/typography'),
     function ({ addUtilities }: PluginAPI) {
       addUtilities({

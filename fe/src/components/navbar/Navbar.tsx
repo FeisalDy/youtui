@@ -7,7 +7,7 @@ const liClasses =
   'after-hover rounded-sm py-2 transition-colors font-medium text-black dark:text-white group'
 
 const activeLiClasses =
-  'bg-clip-text text-transparent bg-gradient-to-r from-[#27ff00] to-green-100 font-bold'
+  'bg-clip-text text-transparent bg-gradient-to-r from-[#27ff00] to-slate-400 dark:to-green-100 font-bold'
 
 export function Navbar () {
   const { theme, setTheme } = useTheme()
@@ -17,7 +17,7 @@ export function Navbar () {
     <div className='w-full dark:bg-[#131415]'>
       <span className='block h-1 bg-[#27ff00]/70 ' />
       <div className='container max-w-6xl '>
-        <nav className='layout flex items-center justify-between py-4 pl-4'>
+        <nav className='layout flex items-center justify-between py-4 ml-4 lg:ml-0'>
           <ul className='flex items-center justify-between space-x-3 md:space-x-4 md:text-base'>
             <li>
               <a

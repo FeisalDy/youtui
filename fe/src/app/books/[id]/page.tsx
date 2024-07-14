@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import { BookWithComments } from '@/types/book'
 import { BookDescription } from '@/components/book/BookDescription'
 import { BookComment } from '@/components/book/BookComments'
+import { BookSkeleton } from '@/components/book/BookSkeleton'
 import fetch from 'isomorphic-unfetch'
 
 export default function BookPage (): JSX.Element {
@@ -26,7 +27,7 @@ export default function BookPage (): JSX.Element {
   })
 
   if (isPending) {
-    return <span>Loading...</span>
+    return <BookSkeleton />
   }
 
   if (isError) {

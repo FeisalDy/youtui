@@ -28,12 +28,13 @@ export type BookWithComments = {
   comments: Comment[]
 }
 
+export type PaginationT = {
+  page: number
+  limit: number
+  totalCount: number
+  totalPages: number
+}
 export type BookList = {
   books: Book[]
-  pagination: {
-    page: number
-    limit: number
-    totalCount: number
-    totalPages: number
-  }
+  pagination: PaginationT
 }
