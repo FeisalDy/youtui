@@ -1,10 +1,38 @@
-export default async function BookPage () {
-  const data = await fetch(
-    'http://localhost:3333/api/en-books/2?comments=true'
-  ).then(res => res.json())
+import Books from './books'
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient
+} from '@tanstack/react-query'
+import { getBooks } from '@/server/getBooks'
+import { redirect } from 'next/navigation'
+import { DefaultPagination } from '@/components/pagination/Pagination'
+
+export default async function Home ({ searchParams }: any) {
+  const queryClient = new QueryClient()
+  const page = parseInt(searchParams?.page) || 1
+
+  await queryClient.prefetchQuery({
+    queryKey: ['books', page],
+    // @ts-ignore
+    queryFn: () => getBooks(page)
+  })
+
+  const navigate = (page: number, isNext: boolean) => {
+    if (isNext) {
+      redirect(`/books?page=${page + 1}`)
+    }
+    if (!isNext) {
+      redirect(`/books?page=${page - 1}`)
+    }
+  }
+
   return (
-    <div className='grid grid-flow-row auto-rows-max gap-y-4'>
-      {data.book.name}
-    </div>
+    <>
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <Books page={page} />
+      </HydrationBoundary>
+      <DefaultPagination />
+    </>
   )
 }

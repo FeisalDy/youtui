@@ -33,7 +33,6 @@ export function BookCore ({ item }: BookCoreProps) {
     : '/default_book.png'
 
   return (
-    // <div className='bg-slate-100 dark:bg-[#131415] absolute left-0 right-0 w-full'>
     <div className='bg-slate-100 dark:bg-[#161616] w-full'>
       <div className='max-w-6xl mx-auto'>
         <div className='grid grid-rows-1 grid-cols-5 sm:grid-cols-6 grid-flow-col gap-4'>
@@ -48,14 +47,6 @@ export function BookCore ({ item }: BookCoreProps) {
                 placeholder='blur'
                 blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNsamiqBwAFFQIFTZQjUQAAAABJRU5ErkJggg=='
               />
-              {/* <Image
-                  src={imageUrl}
-                  alt={item.name}
-                  fill
-                  className='rounded-md m-4'
-                  placeholder='blur'
-                  blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNsamiqBwAFFQIFTZQjUQAAAABJRU5ErkJggg=='
-                /> */}
             </Link>
           </div>
           <div className='col-span-3 sm:col-span-4 m-4'>

@@ -27,3 +27,13 @@ export type BookWithComments = {
   book: Book
   comments: Comment[]
 }
+
+export type BookList = {
+  books: Book[]
+  pagination: {
+    page: number
+    limit: number
+    totalCount: number
+    totalPages: number
+  }
+}

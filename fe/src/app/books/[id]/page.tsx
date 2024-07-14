@@ -7,15 +7,9 @@ import { BookDescription } from '@/components/book/BookDescription'
 import { BookComment } from '@/components/book/BookComments'
 import fetch from 'isomorphic-unfetch'
 
-const getRandomBookId = (): number => {
-  const totalBooks = 7100
-  return Math.floor(Math.random() * totalBooks) + 1
-}
-
 export default function BookPage (): JSX.Element {
   const pathname = usePathname()
   const bookId = parseInt(pathname.split('/')[2])
-  //   const bookId = getRandomBookId()
 
   const fetchBook = async (): Promise<BookWithComments> => {
     const response = await fetch(
@@ -29,12 +23,6 @@ export default function BookPage (): JSX.Element {
   const { isPending, isError, data, error } = useQuery({
     queryKey: ['book', bookId],
     queryFn: fetchBook
-    // queryFn: async () => {
-    //   const response = await fetch(
-    //     `http://192.168.1.4:3333/api/en-books/${bookId}?comments=true`
-    //   )
-    //   return response.json()
-    // }
   })
 
   if (isPending) {

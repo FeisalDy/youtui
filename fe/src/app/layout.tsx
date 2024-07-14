@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, Roboto } from 'next/font/google'
 import './globals.css'
-import { ReactQueryClientProvider } from '@/components/ReactQueryClientProvider'
+import ReactQueryClientProvider from '@/components/ReactQueryClientProvider'
 import { Navbar } from '@/components/navbar/Navbar'
 import { ThemeProvider } from '@/components/ThemeProvider'
 
@@ -25,7 +25,6 @@ export default function RootLayout ({
   return (
     <ReactQueryClientProvider>
       <html lang='en'>
-        {/* <body className={`${roboto.className} dark:bg-[#202020]`}> */}
         <body className={roboto.className}>
           <ThemeProvider
             attribute='class'
@@ -33,11 +32,8 @@ export default function RootLayout ({
             enableSystem
             disableTransitionOnChange
           >
-            <div>
-              <Navbar />
-              {/* <div className='container max-w-[1024px]'>{children}</div> */}
-              {children}
-            </div>
+            <Navbar />
+            {children}
           </ThemeProvider>
         </body>
       </html>

@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+import type { PluginAPI } from 'tailwindcss/types/config'
 
 const config: Config = {
   darkMode: 'class',
@@ -19,6 +20,35 @@ const config: Config = {
       }
     }
   },
-  plugins: [require('@tailwindcss/typography')]
+  variants: {
+    extend: {
+      backgroundColor: ['group-hover'],
+      textColor: ['group-hover']
+    }
+  },
+  plugins: [
+    require('@tailwindcss/typography'),
+    function ({ addUtilities }: PluginAPI) {
+      addUtilities({
+        '.after-hover': {
+          position: 'relative'
+        },
+        '.after-hover::after': {
+          content: '""',
+          position: 'absolute',
+          width: '100%',
+          height: '2px', // Adjust the height to your preference
+          backgroundColor: '#27ff00', // Change to the color you want
+          bottom: '-2px', // Adjust the position to place it right below the text
+          left: '0',
+          transform: 'scaleX(0)',
+          transition: 'transform 0.3s ease-in-out'
+        },
+        '.after-hover:hover::after': {
+          transform: 'scaleX(1)'
+        }
+      })
+    }
+  ]
 }
 export default config
