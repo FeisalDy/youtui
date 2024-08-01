@@ -27,6 +27,13 @@ export default class CommentsController {
     return ctx.response.json(comments)
   }
 
+  async en_list (ctx: HttpContext) {
+    const comments = await prisma.en_comments.findFirst({
+      include: { book: true },
+    })
+    return ctx.response.json(comments)
+  }
+
   async show (ctx: HttpContext) {
     const message = ctx.params.message
     const searchQuery = decodeURIComponent(message)

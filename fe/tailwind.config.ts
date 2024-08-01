@@ -12,6 +12,22 @@ const config: Config = {
     './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}'
   ],
   theme: {
+    colors: {
+      transparent: 'transparent',
+      apple: {
+        '50': '#f1fcf3',
+        '100': '#dff9e3',
+        '200': '#c1f1c9',
+        '300': '#91e4a0',
+        '400': '#5ace6f',
+        '500': '#32ae49',
+        '600': '#25943a',
+        '700': '#217431',
+        '800': '#1f5c2b',
+        '900': '#1b4c25',
+        '950': '#092a11'
+      }
+    },
     container: {
       center: true
     },
@@ -31,7 +47,19 @@ const config: Config = {
   },
   plugins: [
     nextui({
-      addCommonColors: true
+      addCommonColors: true,
+      //   layout: {}
+      themes: {
+        dark: {
+          colors: {
+            // primary: {
+            //   DEFAULT: '#32ae49',
+            //   foreground: '#000000'
+            // },
+            // focus: '#BEF264'
+          }
+        }
+      }
     }),
     require('@tailwindcss/typography'),
     function ({ addUtilities }: PluginAPI) {
@@ -43,9 +71,9 @@ const config: Config = {
           content: '""',
           position: 'absolute',
           width: '100%',
-          height: '2px', // Adjust the height to your preference
-          backgroundColor: '#27ff00', // Change to the color you want
-          bottom: '-2px', // Adjust the position to place it right below the text
+          height: '2px',
+          backgroundColor: '#006FEE',
+          bottom: '-2px',
           left: '0',
           transform: 'scaleX(0)',
           transition: 'transform 0.3s ease-in-out'

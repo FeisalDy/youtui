@@ -16,8 +16,13 @@ export default function Books ({ page }: BooksT) {
     queryFn: () => getBooks(page)
   })
 
-  if (error) return { error }
-  if (isLoading) return { isLoading }
+  if (error) {
+    return <div>Error: {error.message}</div>
+  }
+
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
 
   const { books, pagination } = data as BookList
 

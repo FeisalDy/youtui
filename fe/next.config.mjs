@@ -1,6 +1,7 @@
 const hostnames = ['*', 'wfqqreader.3g.qq.com', 'qidian.qpic.cn']
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: false,
   images: {
     remotePatterns: [
       ...hostnames.map(hostname => ({ protocol: 'https', hostname })),

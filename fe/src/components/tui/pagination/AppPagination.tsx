@@ -1,0 +1,93 @@
+'use client'
+import React from 'react'
+import {
+  Pagination,
+  PaginationItemType,
+  PaginationProps
+} from '@nextui-org/react'
+import { PaginationT } from '@/types/book'
+import { useRouter, useSearchParams } from 'next/navigation'
+import cn from 'classnames'
+import { ChevronIcon } from '../../svg/ChevronIcon'
+
+type Prop = {
+  data: PaginationT
+}
+export default function AppPagination ({ data }: Prop) {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const tag = searchParams.get('tag') || ''
+  const limit = Number(searchParams.get('limit')) || 10
+  const length = Number(searchParams.get('length')) || 0
+
+  const renderItem: PaginationProps['renderItem'] = ({
+    ref,
+    key,
+    value,
+    isActive,
+    onNext,
+    onPrevious,
+    setPage,
+    className
+  }) => {
+    if (value === PaginationItemType.NEXT) {
+      return (
+        <button
+          key={key}
+          className={cn(className, 'bg-default-200/50 min-w-8 w-8 h-8')}
+          onClick={onNext}
+        >
+          <ChevronIcon className='rotate-180' />
+        </button>
+      )
+    }
+
+    if (value === PaginationItemType.PREV) {
+      return (
+        <button
+          key={key}
+          className={cn(className, 'bg-default-200/50 min-w-8 w-8 h-8')}
+          onClick={onPrevious}
+        >
+          <ChevronIcon />
+        </button>
+      )
+    }
+
+    if (value === PaginationItemType.DOTS) {
+      return (
+        <button key={key} className={className}>
+          ...
+        </button>
+      )
+    }
+
+    return (
+      <button
+        key={key}
+        ref={ref}
+        className={cn(className, isActive && 'text-white bg-primary-400')}
+        onClick={() => setPage(value)}
+      >
+        {value}
+      </button>
+    )
+  }
+
+  return (
+    <Pagination
+      variant='light'
+      total={data.totalPages}
+      page={data.page}
+      onChange={page =>
+        router.push(
+          `/tui?tag=${tag}&page=${page}&limit=${limit}&length=${length}`
+        )
+      }
+      className='overflow-x-hidden m-4'
+      renderItem={renderItem}
+      disableCursorAnimation
+      showControls
+    />
+  )
+}

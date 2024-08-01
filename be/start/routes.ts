@@ -38,6 +38,7 @@ router
       .prefix('comments')
     router
       .group(() => {
+        router.get(`/list`, [CommentsController, 'en_list'])
         router.get(`:id`, [CommentsController, 'en_index'])
         router.get('/search/:message', [CommentsController, 'show'])
       })
