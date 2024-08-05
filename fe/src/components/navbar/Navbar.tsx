@@ -38,8 +38,8 @@ export function Navbar () {
               </a>
             </li>
             <li>
-              <a className={liClasses} href='/shorts'>
-                <span className=''>Shorts</span>
+              <a className={liClasses} href='/booklist'>
+                <span className=''>Booklist</span>
               </a>
             </li>
             <li>

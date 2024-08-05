@@ -64,3 +64,9 @@ model tui_json {
  id Int @id @default(autoincrement())
  data Json @db.JsonB
 }
+
+model tui_booklist {
+ id Int @id @default(autoincrement())
+ title String
+ data Json @db.JsonB
+}

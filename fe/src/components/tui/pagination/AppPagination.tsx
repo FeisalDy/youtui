@@ -6,20 +6,25 @@ import {
   PaginationProps
 } from '@nextui-org/react'
 import { PaginationT } from '@/types/book'
-import { useRouter, useSearchParams } from 'next/navigation'
 import cn from 'classnames'
 import { ChevronIcon } from '../../svg/ChevronIcon'
 
 type Prop = {
   data: PaginationT
+  setQueryParams: (
+    newParams: Partial<{
+      tag?: string
+      limit?: number
+      length?: number
+      page?: number
+    }>
+  ) => void
 }
-export default function AppPagination ({ data }: Prop) {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const tag = searchParams.get('tag') || ''
-  const limit = Number(searchParams.get('limit')) || 10
-  const length = Number(searchParams.get('length')) || 0
 
+export default function AppPagination ({
+  data,
+  setQueryParams
+}: Prop): JSX.Element {
   const renderItem: PaginationProps['renderItem'] = ({
     ref,
     key,
@@ -79,11 +84,7 @@ export default function AppPagination ({ data }: Prop) {
       variant='light'
       total={data.totalPages}
       page={data.page}
-      onChange={page =>
-        router.push(
-          `/tui?tag=${tag}&page=${page}&limit=${limit}&length=${length}`
-        )
-      }
+      onChange={page => setQueryParams({ page })}
       className='overflow-x-hidden m-4'
       renderItem={renderItem}
       disableCursorAnimation

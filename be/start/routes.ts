@@ -45,6 +45,10 @@ router
       .prefix('en-comments')
     router
       .group(() => {
+        router.get('booklist', [TuisController, 'show_booklist'])
+        router.post('scrape', [TuisController, 'scrape_booklist'])
+        // router.post('new/booklist', [TuisController, 'create_booklist'])
+        router.get('tags', [TuisController, 'tag_search'])
         router.get('list', [TuisController, 'index'])
         router.get(':uniquebook', [TuisController, 'show'])
       })

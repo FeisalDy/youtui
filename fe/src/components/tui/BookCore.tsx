@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { BookDescription } from './BookDescription'
 import { Button } from '@nextui-org/react'
+import { Chip } from '@nextui-org/react'
 
 type BookCoreProps = {
   item: Book
@@ -49,7 +50,7 @@ export function BookCore ({ item }: BookCoreProps) {
                 alt={item.title}
                 width={400}
                 height={600}
-                className='rounded-md m-4'
+                className='rounded-md m-4 md:mx-0 md:my-4'
                 placeholder='blur'
                 blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNsamiqBwAFFQIFTZQjUQAAAABJRU5ErkJggg=='
               />
@@ -84,13 +85,26 @@ export function BookCore ({ item }: BookCoreProps) {
                   >
                     {tag}
                   </button> */}
-                  <Button
+                  {/* <Button
                     key={tag}
                     color='primary'
-                    className='inline-flex items-center px-2 py-1 md:px-5 md:py-2.5 text-sm font-medium text-center focus:ring-4 focus:outline-none mt-2 md:mt-4 me-2'
+                    className='capitalize inline-flex items-center px-2 py-1 md:px-5 md:py-2.5 text-sm font-medium text-center focus:ring-4 focus:outline-none mt-2 md:mt-4 me-2'
+                    // isDisabled
                   >
                     {tag}
-                  </Button>
+                  </Button> */}
+                  <Link
+                    href={'/tui?tag=' + tag}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                  >
+                    <Chip
+                      color='primary'
+                      className='capitalize inline-flex items-center px-2 py-2 md:px-5 md:py-2.5 text-sm font-medium text-center focus:ring-4 focus:outline-none mt-2 md:mt-4 me-2'
+                    >
+                      {tag}
+                    </Chip>
+                  </Link>
                 </>
               ))}
             </div>
