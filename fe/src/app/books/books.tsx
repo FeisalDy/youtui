@@ -26,6 +26,8 @@ export default function Books ({ page }: BooksT) {
 
   const { books, pagination } = data as BookList
 
+  console.log(books)
+
   return (
     <div className='max-w-6xl mx-auto'>
       <div className='grid grid-cols-2 gap-4 mx-4 lg:mx-0'>

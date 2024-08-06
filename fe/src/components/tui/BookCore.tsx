@@ -77,7 +77,7 @@ export function BookCore ({ item }: BookCoreProps) {
             </div>
 
             <div>
-              {item.tag.map(tag => (
+              {item.tag?.map(tag => (
                 <>
                   {/* <button
                     type='button'

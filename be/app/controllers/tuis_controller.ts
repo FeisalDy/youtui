@@ -110,30 +110,21 @@ export default class TuisController {
       },
     })
     if (!tui) {
-      return ctx.response.status(404).json({ message: 'Not Found' })
+      return ctx.response.status(200).json({ error: 'Book not found' })
     }
     return ctx.response.json(tui.data)
   }
 
-  async show_booklist (ctx: HttpContext) {
-    // const bookNameRaw = ctx.request.qs().bookName || ''
+  async index_booklist (ctx: HttpContext) {
     const bookListNameRaw = ctx.request.qs().bookListName || ''
     const limit = Number(ctx.request.qs().limit) || 10
     const page = Number(ctx.request.qs().page) || 1
 
-    // const bookName = decodeURIComponent(bookNameRaw)
     const bookListName = decodeURIComponent(bookListNameRaw)
 
     const skip = (page - 1) * limit
     let booklist = []
     let totalCount = 0
-
-    // if (bookName) {
-    //   const booklist = await prisma.tui_booklist.findMany({
-    //     where: { data: { array_contains: bookName } },
-    //   })
-    //   return ctx.response.json({ code: '200', data: booklist })
-    // }
 
     if (bookListName) {
       totalCount = await prisma.tui_booklist.count({
@@ -167,6 +158,16 @@ export default class TuisController {
     })
   }
 
+  async show_booklist (ctx: HttpContext) {
+    const bookListId = ctx.params.id
+    const booklist = await prisma.tui_booklist.findUnique({
+      where: {
+        id: Number(bookListId),
+      },
+    })
+    return ctx.response.json({ code: 200, data: booklist })
+  }
+
   async scrape_booklist (ctx: HttpContext) {
     const { url } = ctx.request.body()
 
@@ -179,7 +180,7 @@ export default class TuisController {
     })
 
     if (existingBooklist) {
-      return ctx.response.status(200).json({ error: 'Booklist already exists' })
+      return ctx.response.status(200).json({ code: 400, error: 'Booklist already exists' })
     }
 
     const status = await prisma.tui_booklist.create({

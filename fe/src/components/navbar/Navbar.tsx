@@ -26,7 +26,8 @@ export function Navbar () {
                 className={pathname === '/' ? activeLiClasses : liClasses}
                 href='/'
               >
-                <span className=''>Home</span>
+                {/* <span className=''>Home</span> */}
+                {/* <span className=''>家</span> */}
               </a>
             </li>
             <li>
@@ -34,19 +35,26 @@ export function Navbar () {
                 className={pathname === 'books' ? activeLiClasses : liClasses}
                 href='/books'
               >
+                {/* <span className=''>Books</span> */}
+                <span className=''>图书</span>
+              </a>
+            </li>
+            <li>
+              <a
+                className={
+                  pathname === 'booklist' ? activeLiClasses : liClasses
+                }
+                href='/booklist'
+              >
+                {/* <span className=''>Booklist</span> */}
+                <span className=''>书单</span>
+              </a>
+            </li>
+            {/* <li>
+              <a className={liClasses} href='/about'>
                 <span className=''>Books</span>
               </a>
-            </li>
-            <li>
-              <a className={liClasses} href='/booklist'>
-                <span className=''>Booklist</span>
-              </a>
-            </li>
-            <li>
-              <a className={liClasses} href='/about'>
-                <span className=''>About</span>
-              </a>
-            </li>
+            </li> */}
           </ul>
           {theme === 'dark' ? (
             <MoonIcon setTheme={setTheme} />

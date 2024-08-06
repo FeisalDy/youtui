@@ -1,6 +1,6 @@
 'use server'
 import fetch from 'isomorphic-unfetch'
-import { BookListT } from '@/types/booklist'
+import { BookListT, BookListDataT } from '@/types/booklist'
 
 interface GetBookListParams {
   bookListName?: string
@@ -23,6 +23,16 @@ export async function getBookList (
     )
     const data = await res.json()
     return data
+  } catch (error: any) {
+    throw error
+  }
+}
+
+export async function getBookListById (id: number): Promise<BookListDataT> {
+  try {
+    const res = await fetch(`${process.env.API_URL}tuis/booklist/${id}`)
+    const data = await res.json()
+    return data.data
   } catch (error: any) {
     throw error
   }

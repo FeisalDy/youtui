@@ -16,6 +16,7 @@ export type Book = {
   second_type_name: string
   word_number_name: string
   score_people_number: number
+  error?: string
 }
 
 export type Pagination = {

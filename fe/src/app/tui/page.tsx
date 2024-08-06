@@ -39,6 +39,8 @@ export default function BookPage (): JSX.Element {
     return <span>Error: {error.message}</span>
   }
 
+  console.log(data.data)
+
   return (
     <>
       {data.data.map((item: Book) => (

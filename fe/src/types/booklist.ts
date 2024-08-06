@@ -1,7 +1,7 @@
 export type BookListDataT = {
   id: number
   title: string
-  data: []
+  data: string[]
 }
 
 export type BookListPaginationT = {
