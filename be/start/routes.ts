@@ -12,6 +12,7 @@ const BooksController = () => import('#controllers/books_controller')
 const EnBooksController = () => import('#controllers/en_books_controller')
 const CommentsController = () => import('#controllers/comments_controller')
 const TuisController = () => import('#controllers/tuis_controller')
+const PixivsController = () => import('#controllers/pixivs_controller')
 
 router.on('/').render('pages/home')
 router
@@ -53,5 +54,10 @@ router
         router.get(':uniquebook', [TuisController, 'show'])
       })
       .prefix('tuis')
+    router
+      .group(() => {
+        router.get('/', [PixivsController, 'index'])
+      })
+      .prefix('pixiv')
   })
   .prefix('api')

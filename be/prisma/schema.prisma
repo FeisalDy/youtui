@@ -71,3 +71,8 @@ model tui_booklist {
  data Json @db.JsonB
  created_at DateTime @default(now())
 }
+
+model pixiv_json {
+ id Int @id @default(autoincrement())
+ data Json @db.JsonB
+}

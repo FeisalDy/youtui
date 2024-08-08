@@ -7,7 +7,7 @@ import AppPagination from '@/components/tui/pagination/AppPagination'
 import { getTuis } from '@/server/getTui'
 import { useQueryParams } from '@/hooks/useQuery'
 import { z } from 'zod'
-
+import { useSearchParams } from 'next/navigation'
 const queryParamSchema = z.object({
   tag: z.string().optional(),
   page: z.coerce.number().optional(),
@@ -16,15 +16,16 @@ const queryParamSchema = z.object({
 })
 
 export default function BookPage (): JSX.Element {
+  const searchParams = useSearchParams()
   const { queryParams, setQueryParams } = useQueryParams({
     schema: queryParamSchema,
     defaultValues: {}
   })
 
-  const page = queryParams.page
-  const limit = queryParams.limit
-  const tag = queryParams.tag
-  const length = queryParams.length
+  const page = Number(searchParams.get('page')) || 1
+  const limit = Number(searchParams.get('limit')) || 10
+  const tag = searchParams.get('tag')
+  const length = Number(searchParams.get('length')) || 0
 
   const { isPending, isError, data, error } = useQuery({
     queryKey: ['book', page, tag, limit],
@@ -38,8 +39,6 @@ export default function BookPage (): JSX.Element {
   if (isError) {
     return <span>Error: {error.message}</span>
   }
-
-  console.log(data.data)
 
   return (
     <>
