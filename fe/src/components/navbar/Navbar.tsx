@@ -26,7 +26,7 @@ export function Navbar () {
                 className={pathname === '/' ? activeLiClasses : liClasses}
                 href='/'
               >
-                {/* <span className=''>Home</span> */}
+                <span className=''>Home</span>
                 {/* <span className=''>家</span> */}
               </a>
             </li>
@@ -35,8 +35,8 @@ export function Navbar () {
                 className={pathname === 'books' ? activeLiClasses : liClasses}
                 href='/books'
               >
-                {/* <span className=''>Books</span> */}
-                <span className=''>图书</span>
+                <span className=''>Books</span>
+                {/* <span className=''>图书</span> */}
               </a>
             </li>
             <li>
@@ -46,8 +46,8 @@ export function Navbar () {
                 }
                 href='/booklist'
               >
-                {/* <span className=''>Booklist</span> */}
-                <span className=''>书单</span>
+                <span className=''>Booklist</span>
+                {/* <span className=''>书单</span> */}
               </a>
             </li>
             {/* <li>

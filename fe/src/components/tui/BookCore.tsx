@@ -79,20 +79,6 @@ export function BookCore ({ item }: BookCoreProps) {
             <div>
               {item.tag?.map(tag => (
                 <>
-                  {/* <button
-                    type='button'
-                    className='inline-flex items-center px-2 py-1 md:px-5 md:py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-2 md:mt-4 me-2'
-                  >
-                    {tag}
-                  </button> */}
-                  {/* <Button
-                    key={tag}
-                    color='primary'
-                    className='capitalize inline-flex items-center px-2 py-1 md:px-5 md:py-2.5 text-sm font-medium text-center focus:ring-4 focus:outline-none mt-2 md:mt-4 me-2'
-                    // isDisabled
-                  >
-                    {tag}
-                  </Button> */}
                   <Link
                     href={'/tui?tag=' + tag}
                     target='_blank'

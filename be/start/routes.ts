@@ -46,6 +46,7 @@ router
       .prefix('en-comments')
     router
       .group(() => {
+        router.get('booklist/book/', [TuisController, 'book_with_booklist'])
         router.get('booklist/:id', [TuisController, 'show_booklist'])
         router.get('booklist', [TuisController, 'index_booklist'])
         router.post('scrape', [TuisController, 'scrape_booklist'])

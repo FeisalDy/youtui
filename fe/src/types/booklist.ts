@@ -2,6 +2,8 @@ export type BookListDataT = {
   id: number
   title: string
   data: string[]
+  created_at: Date
+  error?: string
 }
 
 export type BookListPaginationT = {

@@ -49,6 +49,7 @@ export default class TuisController {
     const tags = await prisma.$queryRawUnsafe<TagT>(dataQuery)
 
     return ctx.response.json({
+      status: '200',
       data: tags,
       pagination: {
         page,
@@ -166,6 +167,58 @@ export default class TuisController {
       },
     })
     return ctx.response.json({ code: 200, data: booklist })
+  }
+
+  async book_with_booklist (ctx: HttpContext) {
+    let { page = 1, limit = 10, name } = ctx.request.qs()
+
+    name = decodeURIComponent(name)
+    limit = Number(limit)
+    page = Number(page)
+
+    // Ensure limit is not greater than 100
+    if (limit > 100) {
+      return ctx.response.json({ code: 200, error: 'Limit should be less than 100' })
+    }
+
+    // Calculate the offset for pagination
+    const offset = (page - 1) * limit
+
+    // Use parameterized queries to prevent SQL injection
+    const dataQuery = `
+      SELECT * FROM tui_booklist 
+      WHERE data::jsonb ? '${name}' 
+      ORDER BY id 
+      LIMIT ${limit} OFFSET ${offset}
+    `
+
+    const countQuery = `
+      SELECT COUNT(*) FROM tui_booklist 
+      WHERE data::jsonb ? '${name}'
+    `
+    console.log(dataQuery)
+    console.log(countQuery)
+
+    try {
+      // Execute the queries with parameterized inputs
+      const data = await prisma.$queryRawUnsafe(dataQuery)
+      const totalCountResult = (await prisma.$queryRawUnsafe(countQuery)) as { count: string }[]
+      const totalCount = Number(totalCountResult[0].count)
+      const totalPages = Math.ceil(totalCount / limit)
+
+      return ctx.response.json({
+        code: 200,
+        data,
+        Pagination: {
+          page,
+          limit,
+          totalCount,
+          totalPages,
+        },
+      })
+    } catch (error) {
+      return ctx.response.json({ code: 200, error: 'An error occurred while fetching data' })
+    }
   }
 
   async scrape_booklist (ctx: HttpContext) {

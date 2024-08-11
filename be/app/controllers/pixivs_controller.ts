@@ -62,6 +62,34 @@ export default class PixivsController {
       totalCount = Number(totalCountValue[0].count)
     }
 
+    if (searchTarget === 'title') {
+      const dataQuery = `
+            SELECT data 
+            FROM pixiv_json 
+            WHERE data->>'title' LIKE '%${keyword}%' 
+            ${langQuery ? `AND ${langQuery}` : ''}
+            ORDER BY data->>'create' ${sort}
+            LIMIT ${limit}
+            OFFSET ${(page - 1) * limit}
+            `.trim()
+
+      const totalQuery = `
+            SELECT count(*)
+            FROM pixiv_json
+            WHERE data->>'title' LIKE '%${keyword}%' 
+            ${langQuery ? `AND ${langQuery}` : ''}
+            `.trim()
+
+      console.log(dataQuery)
+      console.log(totalQuery)
+
+      const totalCountValue = await prisma.$queryRawUnsafe<{ count: number }[]>(totalQuery)
+      const results = (await prisma.$queryRawUnsafe(dataQuery)) as Array<{ data: any }>
+
+      data = results.map((result) => this.convertTimestamps(result.data))
+      totalCount = Number(totalCountValue[0].count)
+    }
+
     if (searchTarget === 'exact_match_for_tags') {
       const dataQuery = `
           SELECT data 

@@ -1,7 +1,7 @@
 const VALID_SEARCH_TARGETS = [
   'partial_match_for_tags',
   'exact_match_for_tags',
-  'title_and_caption',
+  'title',
   '',
 ] as const
 

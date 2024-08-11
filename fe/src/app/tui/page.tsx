@@ -8,6 +8,7 @@ import { getTuis } from '@/server/getTui'
 import { useQueryParams } from '@/hooks/useQuery'
 import { z } from 'zod'
 import { useSearchParams } from 'next/navigation'
+
 const queryParamSchema = z.object({
   tag: z.string().optional(),
   page: z.coerce.number().optional(),
@@ -24,7 +25,7 @@ export default function BookPage (): JSX.Element {
 
   const page = Number(searchParams.get('page')) || 1
   const limit = Number(searchParams.get('limit')) || 10
-  const tag = searchParams.get('tag')
+  const tag = searchParams.get('tag') || ''
   const length = Number(searchParams.get('length')) || 0
 
   const { isPending, isError, data, error } = useQuery({
