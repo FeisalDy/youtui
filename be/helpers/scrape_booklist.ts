@@ -12,6 +12,7 @@ type ScrapedDataT = {
 export async function scrapeBooklist(url: string): Promise<ScrapedDataT> {
   try {
     const res = await axios.get(url)
+    console.log(url)
 
     if (res.status !== 200) {
       return { error: 'Failed to retrieve web page', title: '', data: [] }

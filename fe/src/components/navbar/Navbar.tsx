@@ -26,7 +26,7 @@ export function Navbar () {
                 className={pathname === '/' ? activeLiClasses : liClasses}
                 href='/'
               >
-                <span className=''>Home</span>
+                {/* <span className=''>Home</span> */}
                 {/* <span className=''>家</span> */}
               </a>
             </li>

@@ -2,6 +2,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import { PrismaClient } from '@prisma/client'
 import { scrapeBooklist } from '../../helpers/scrape_booklist.js'
+
 const prisma = new PrismaClient()
 
 type TuiData = {
@@ -233,12 +234,20 @@ export default class TuisController {
     })
 
     if (existingBooklist) {
-      return ctx.response.status(200).json({ code: 400, error: 'Booklist already exists' })
+      return ctx.response.json({ code: 200, error: 'Booklist already exists' })
     }
 
-    const status = await prisma.tui_booklist.create({
-      data: data,
-    })
-    return ctx.response.json({ code: 200, data: status })
+    try {
+      const status = await prisma.tui_booklist.create({
+        data: data,
+      })
+      return ctx.response.json({ code: 200, data: status, error: null })
+    } catch (error) {
+      return ctx.response.json({
+        code: 200,
+        error: 'An error occurred while saving data',
+        message: error.message,
+      })
+    }
   }
 }

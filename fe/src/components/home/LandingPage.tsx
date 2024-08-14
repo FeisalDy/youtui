@@ -26,8 +26,8 @@ export default function LandingPage () {
     <>
       <div className='mx-1 lg:prose-lg text-center min-h-96 flex items-center'>
         <h1 className='dark: text-white'>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita
-          dolore magni fugiat blanditiis, soluta veniam omnis possimus!
+          apa iya Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+          Expedita dolore magni fugiat blanditiis, soluta veniam omnis possimus!
           Similique excepturi libero accusantium dolores iure asperiores nisi
           reiciendis aspernatur. Praesentium, quod obcaecati?
         </h1>
