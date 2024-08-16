@@ -43,7 +43,7 @@ export default function BookListCore ({ page }: PropsT) {
 
   return (
     <div className='max-w-6xl mx-auto'>
-      <div className='grid grid-flow-row auto-rows-max gap-y-6'>
+      <div className='grid grid-flow-row auto-rows-max gap-y-6 mx-4 '>
         {booklist.map((book, index) => (
           <BookListCard key={book.id} data={book} />
         ))}

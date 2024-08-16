@@ -4,6 +4,7 @@ import { nextui } from '@nextui-org/react'
 // const { nextui } = require('@nextui-org/react')
 
 const config: Config = {
+  important: true,
   darkMode: 'class',
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -12,22 +13,34 @@ const config: Config = {
     './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}'
   ],
   theme: {
-    colors: {
-      transparent: 'transparent',
-      apple: {
-        '50': '#f1fcf3',
-        '100': '#dff9e3',
-        '200': '#c1f1c9',
-        '300': '#91e4a0',
-        '400': '#5ace6f',
-        '500': '#32ae49',
-        '600': '#25943a',
-        '700': '#217431',
-        '800': '#1f5c2b',
-        '900': '#1b4c25',
-        '950': '#092a11'
-      }
-    },
+    // colors: {
+    //   transparent: 'transparent',
+    //   apple: {
+    //     '50': '#f1fcf3',
+    //     '100': '#dff9e3',
+    //     '200': '#c1f1c9',
+    //     '300': '#91e4a0',
+    //     '400': '#5ace6f',
+    //     '500': '#32ae49',
+    //     '600': '#25943a',
+    //     '700': '#217431',
+    //     '800': '#1f5c2b',
+    //     '900': '#1b4c25',
+    //     '950': '#092a11'
+    //   },
+    //   blue: {
+    //     50: '#e6f1fe',
+    //     100: '#cce3fd',
+    //     200: '#99c7fb',
+    //     300: '#66aaf9',
+    //     400: '#338ef7',
+    //     500: '#006FEE',
+    //     600: '#005bc4',
+    //     700: '#004493',
+    //     800: '#002e62',
+    //     900: '#001731'
+    //   }
+    // },
     container: {
       center: true
     },
@@ -58,13 +71,13 @@ const config: Config = {
       //   layout: {}
       themes: {
         dark: {
-          colors: {
-            // primary: {
-            //   DEFAULT: '#32ae49',
-            //   foreground: '#000000'
-            // },
-            // focus: '#BEF264'
-          }
+          //   colors: {
+          //     // primary: {
+          //     //   DEFAULT: '#32ae49',
+          //     //   foreground: '#000000'
+          //     // },
+          //     // focus: '#BEF264'
+          //   }
         }
       }
     }),

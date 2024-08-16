@@ -41,7 +41,8 @@ export function BookCore ({ item }: BookCoreProps) {
         <div className='grid grid-rows-1 grid-cols-5 sm:grid-cols-6 grid-flow-col gap-4'>
           <div className='row-span-1 col-span-2 sm:col-span-2'>
             <Link
-              href={`https://www.google.com/search?q=${item.title}`}
+              //   href={`https://www.google.com/search?q=${item.title}`}
+              href={`/tui/${item.title}`}
               target='_blank'
               rel='noopener noreferrer'
             >
@@ -58,7 +59,8 @@ export function BookCore ({ item }: BookCoreProps) {
           </div>
           <div className='col-span-3 sm:col-span-4 m-4'>
             <h1 className='md:text-4xl text-md font-bold capitalize'>
-              <Link href={`https://www.google.com/search?q=${item.title}`}>
+              {/* <Link href={`https://www.google.com/search?q=${item.title}`}> */}
+              <Link href={`/tui/${item.title}`} target='_blank'>
                 {item.title}
               </Link>
             </h1>

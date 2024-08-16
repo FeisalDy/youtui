@@ -8,6 +8,8 @@
 */
 
 import router from '@adonisjs/core/services/router'
+import { throttle } from '#start/limiter'
+
 const BooksController = () => import('#controllers/books_controller')
 const EnBooksController = () => import('#controllers/en_books_controller')
 const CommentsController = () => import('#controllers/comments_controller')
@@ -49,7 +51,7 @@ router
         router.get('booklist/book/', [TuisController, 'book_with_booklist'])
         router.get('booklist/:id', [TuisController, 'show_booklist'])
         router.get('booklist', [TuisController, 'index_booklist'])
-        router.post('scrape', [TuisController, 'scrape_booklist'])
+        router.post('scrape', [TuisController, 'scrape_booklist']).use(throttle)
         router.get('tags', [TuisController, 'tag_search'])
         router.get('list', [TuisController, 'index'])
         router.get(':uniquebook', [TuisController, 'show'])

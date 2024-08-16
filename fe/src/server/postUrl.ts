@@ -3,7 +3,7 @@ import fetch from 'isomorphic-unfetch'
 
 export async function postUrl (url: string) {
   try {
-    console.log(url)
+    // console.log(url)
     const res = await fetch(process.env.API_URL + `tuis/scrape`, {
       method: 'POST',
       headers: {

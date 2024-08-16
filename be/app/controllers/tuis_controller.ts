@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import type { HttpContext } from '@adonisjs/core/http'
 import { PrismaClient } from '@prisma/client'
-import { scrapeBooklist } from '../../helpers/scrape_booklist.js'
+import { TaskWorker } from '../workers/TaskWorker.js'
 
 const prisma = new PrismaClient()
 
@@ -74,7 +74,7 @@ export default class TuisController {
       dataQuery += ` WHERE data-> 'tag' ? '${searchQuery}' AND (data-> 'word_number')::int >= ${length}`
     }
     dataQuery += ` ORDER BY id LIMIT ${limit} OFFSET ${(page - 1) * limit}`
-    console.log(dataQuery)
+    // console.log(dataQuery)
     const totalCount = await prisma.$queryRawUnsafe<{ count: number }[]>(countQuery)
     const tuis = await prisma.$queryRawUnsafe<TuiData[]>(dataQuery)
     const responseData = tuis.map((tui) => {
@@ -182,10 +182,8 @@ export default class TuisController {
       return ctx.response.json({ code: 200, error: 'Limit should be less than 100' })
     }
 
-    // Calculate the offset for pagination
     const offset = (page - 1) * limit
 
-    // Use parameterized queries to prevent SQL injection
     const dataQuery = `
       SELECT * FROM tui_booklist 
       WHERE data::jsonb ? '${name}' 
@@ -197,8 +195,8 @@ export default class TuisController {
       SELECT COUNT(*) FROM tui_booklist 
       WHERE data::jsonb ? '${name}'
     `
-    console.log(dataQuery)
-    console.log(countQuery)
+    // console.log(dataQuery)
+    // console.log(countQuery)
 
     try {
       // Execute the queries with parameterized inputs
@@ -223,31 +221,14 @@ export default class TuisController {
   }
 
   async scrape_booklist (ctx: HttpContext) {
-    const { url } = ctx.request.body()
-
-    const data = await scrapeBooklist(url)
-
-    const existingBooklist = await prisma.tui_booklist.findFirst({
-      where: {
-        title: data.title,
-      },
-    })
-
-    if (existingBooklist) {
-      return ctx.response.json({ code: 200, error: 'Booklist already exists' })
-    }
-
     try {
-      const status = await prisma.tui_booklist.create({
-        data: data,
-      })
-      return ctx.response.json({ code: 200, data: status, error: null })
+      const { url } = ctx.request.body()
+      const job = await TaskWorker.queue.add({ url })
+      const result = await job.finished()
+      return ctx.response.json(result)
     } catch (error) {
-      return ctx.response.json({
-        code: 200,
-        error: 'An error occurred while saving data',
-        message: error.message,
-      })
+      console.error('Error in scrape_booklist:', error)
+      return ctx.response.json({ status: 200, error: 'Failed to process the booklist scraping' })
     }
   }
 }

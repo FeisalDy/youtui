@@ -5,6 +5,8 @@ import {
   QueryClient
 } from '@tanstack/react-query'
 import BookCore from './BookCore'
+import Head from 'next/head'
+import type { Metadata } from 'next'
 
 export default function ShowBookList ({
   params
@@ -19,6 +21,9 @@ export default function ShowBookList ({
 
   return (
     <>
+      <Head>
+        <title>{params.unique}</title>
+      </Head>
       <HydrationBoundary state={dehydrate(queryClient)}>
         <BookCore unique={params.unique} />
       </HydrationBoundary>

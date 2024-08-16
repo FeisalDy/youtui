@@ -1,4 +1,3 @@
-//create helper function to scrape booklist from url
 import axios from 'axios'
 import * as cheerio from 'cheerio'
 import string from '@adonisjs/core/helpers/string'
@@ -8,11 +7,10 @@ type ScrapedDataT = {
   data: string[]
   error?: string
 }
-//eslint-disable-next-line
-export async function scrapeBooklist(url: string): Promise<ScrapedDataT> {
+
+export async function scrapeBooklist (url: string): Promise<ScrapedDataT> {
   try {
-    const res = await axios.get(url)
-    console.log(url)
+    const res = await axios.get(url, { timeout: 5000 })
 
     if (res.status !== 200) {
       return { error: 'Failed to retrieve web page', title: '', data: [] }
@@ -34,7 +32,6 @@ export async function scrapeBooklist(url: string): Promise<ScrapedDataT> {
     $('dt, span[title]').each((index, element) => {
       const el = $(element)
       if (el.is('dt') && el.text() === '随机推荐') {
-        console.log("Reached <dt> tag with text '随机推荐'. Stopping the script.")
         return false
       }
 
@@ -44,17 +41,11 @@ export async function scrapeBooklist(url: string): Promise<ScrapedDataT> {
       }
     })
 
-    let data: ScrapedDataT = { title: filename, data: [] }
-
-    if (titles.length > 0) {
-      data = {
-        title: filename,
-        data: titles,
-      }
+    return {
+      title: filename,
+      data: titles.length > 0 ? titles : [],
     }
-
-    return data
   } catch (error) {
-    return { error: error, title: '', data: [] }
+    return { error: (error as Error).message, title: '', data: [] }
   }
 }

@@ -19,7 +19,6 @@ export function BookDescription ({ item }: BookCoreProps) {
 
   useEffect(() => {
     if (contentRef.current) {
-      // Set maxHeight based on whether content is expanded or not
       setMaxHeight(showMore ? `${contentRef.current.scrollHeight}px` : '120px')
     }
   }, [showMore])
@@ -45,12 +44,6 @@ export function BookDescription ({ item }: BookCoreProps) {
     ?.replace(/(。)/g, '$1\n\n') // Add newline after '。'
     ?.replace(/(！”)/g, '$1\n\n') // Add newline after '！”'
     ?.replace(/(？”|！”|。”)/g, '$1\n\n')
-
-  //   const linesToShow = showMore ? Infinity : 4
-  //   const descriptionLines = formattedDescription
-  //     ?.split('\n')
-  //     .slice(0, linesToShow)
-  //     .join('\n')
 
   return (
     <div className='bg-transparent rounded-lg'>
@@ -78,7 +71,6 @@ export function BookDescription ({ item }: BookCoreProps) {
             }
             disableRipple
             className='mt-2 hover: bg-transparent'
-            // className='mt-2 focus:outline-none focus:ring-2 focus:ring-apple-500'
           >
             {showMore ? 'Show Less' : 'Show More'}
           </Button>

@@ -62,10 +62,7 @@ export default function AppPagination ({ data }: Prop) {
       <button
         key={key}
         ref={ref}
-        className={cn(
-          className,
-          isActive && 'dark:text-black text-white bg-[#27ff00] font-bold'
-        )}
+        className={cn(className, isActive && ' bg-blue-600 text-white ')}
         onClick={() => setPage(value)}
       >
         {value}

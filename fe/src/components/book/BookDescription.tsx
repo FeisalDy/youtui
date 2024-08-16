@@ -20,7 +20,6 @@ export function BookDescription ({ item }: BookCoreProps) {
   }
 
   const decodedDescription = decodeHTMLEntities(item.description)
-  //   const formattedDescription = decodedDescription?.replace(/<br\/>/g, '\n')
   const formattedDescription = decodedDescription?.replace(
     /(depth|analyzes |in-depth|complains| [^\.]*)\. */g,
     '$1.\n\n'
@@ -31,10 +30,7 @@ export function BookDescription ({ item }: BookCoreProps) {
       <div className='prose-sm md:prose-xl rounded-md p-4'>
         <p>Description: </p>
 
-        <ReactMarkdown
-          remarkPlugins={[remarkBreaks]}
-          //   className='indent-4 md:indent-8'
-        >
+        <ReactMarkdown remarkPlugins={[remarkBreaks]}>
           {formattedDescription}
         </ReactMarkdown>
       </div>

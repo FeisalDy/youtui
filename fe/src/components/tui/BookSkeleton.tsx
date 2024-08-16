@@ -18,7 +18,7 @@ export function BookSkeleton () {
           </div>
         </div>
       </div>
-      <div className='bg-slate-100 dark:bg-[#161616] w-full pb-4'>
+      {/* <div className='bg-slate-100 dark:bg-[#161616] w-full pb-4'>
         <div className='max-w-6xl mx-auto'>
           <div className='grid grid-rows-1 grid-cols-5 sm:grid-cols-6 grid-flow-col gap-4'>
             <div className='row-span-1 col-span-2 sm:col-span-2'>
@@ -32,7 +32,7 @@ export function BookSkeleton () {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   )
 }

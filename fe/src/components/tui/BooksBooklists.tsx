@@ -14,7 +14,7 @@ export function BooksBooklists ({ item }: { item: string }) {
     staleTime: 300000 // 5 minutes
   })
 
-  console.log(item)
+//   console.log(item)
   if (isLoading) {
     return <Skeleton />
   }

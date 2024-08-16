@@ -80,8 +80,8 @@ export default class PixivsController {
             ${langQuery ? `AND ${langQuery}` : ''}
             `.trim()
 
-      console.log(dataQuery)
-      console.log(totalQuery)
+    //   console.log(dataQuery)
+    //   console.log(totalQuery)
 
       const totalCountValue = await prisma.$queryRawUnsafe<{ count: number }[]>(totalQuery)
       const results = (await prisma.$queryRawUnsafe(dataQuery)) as Array<{ data: any }>

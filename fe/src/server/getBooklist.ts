@@ -38,27 +38,6 @@ export async function getBookListById (id: number): Promise<BookListDataT> {
   }
 }
 
-// export async function getBooksBooklists (
-//   name: string
-//   //   params: GetBookListParams
-// ): Promise<BookListDataT> {
-//   try {
-//     const queryParams = new URLSearchParams()
-//     // if (params.page) queryParams.append('page', params.page.toString())
-//     // if (params.limit) queryParams.append('limit', params.limit.toString())
-
-//     const res = await fetch(
-//       `${
-//         process.env.API_URL
-//       }tuis/booklist/book?name=${name}&${queryParams.toString()}`
-//     )
-//     const data = await res.json()
-//     return data.data
-//   } catch (error: any) {
-//     throw error
-//   }
-// }
-
 export async function getBooksBooklists (name: string): Promise<BookListT> {
   try {
     const queryParams = new URLSearchParams({

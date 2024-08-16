@@ -26,7 +26,7 @@ export default function Books ({ page }: BooksT) {
 
   const { books, pagination } = data as BookList
 
-  console.log(books)
+//   console.log(books)
 
   return (
     <div className='max-w-6xl mx-auto'>

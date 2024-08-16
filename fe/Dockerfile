@@ -1,6 +1,8 @@
 # fe/Dockerfile
 FROM node:20-alpine
 
+RUN npm install -g pnpm
+
 # Set working directory
 WORKDIR /app
 
@@ -15,4 +17,4 @@ COPY . .
 EXPOSE 3000
 
 # Start the application
-CMD ["npm", "run", "dev"]
+CMD ["pnpm", "run", "dev"]
