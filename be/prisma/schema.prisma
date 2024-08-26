@@ -76,3 +76,23 @@ model pixiv_json {
  id Int @id @default(autoincrement())
  data Json @db.JsonB
 }
+
+model tui_comment {
+  id             Int @id @default(autoincrement())
+  score_id       Int 
+  book_id        Int
+  score          Int
+  content        String
+  image          String[]
+  like_number    Int
+  is_like        Boolean
+  reply_number   Int
+  coll_number    Int
+  is_coll        Boolean
+  create_time    DateTime
+  is_self        Boolean
+  user_id        Int
+  user           Json @db.JsonB
+  post_list      String[]
+
+}

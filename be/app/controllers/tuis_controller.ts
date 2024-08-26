@@ -2,7 +2,9 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import { PrismaClient } from '@prisma/client'
 import { TaskWorker } from '../workers/TaskWorker.js'
-
+import { CommentsWorker } from '../workers/CommentsWorker.js'
+import { Daum, ScrapedDataT } from '../../helpers/scrape_comments.js'
+import { scrapeComments } from '../../helpers/scrape_comments.js'
 const prisma = new PrismaClient()
 
 type TuiData = {
@@ -230,5 +232,86 @@ export default class TuisController {
       console.error('Error in scrape_booklist:', error)
       return ctx.response.json({ status: 200, error: 'Failed to process the booklist scraping' })
     }
+  }
+
+  async scrape_comments (ctx: HttpContext) {
+    let { id } = ctx.request.body()
+    let { page = 1, limit = 10 } = ctx.request.qs()
+    limit = Number(limit)
+    page = Number(page)
+    id = Number(id)
+
+    if (limit > 100) {
+      return ctx.response.json({ code: 200, error: 'Limit should be less than 100' })
+    }
+
+    const offset = (page - 1) * limit
+
+    const url = (page: number, limit: number) =>
+      `https://pre-api.tuishujun.com/api/listBookScoreByBook?book_id=${id}&type=all&page=${page}&pageSize=${limit}&sort_field=create_time&sort_value=desc`
+
+    // const realTotal = await fetch(url(1, 1))
+    //   .then((res) => res.json())
+    //   .then((data) => (data as ScrapedDataT).data?.total || 0)
+
+    // const realTotalDB = await prisma.tui_booklist.count({})
+    const totalCount = await prisma.tui_comment.count({
+      where: { book_id: id },
+    })
+
+    const data = await prisma.tui_comment.findMany({
+      where: { book_id: id },
+      skip: offset,
+      take: limit,
+    })
+    const totalPages = Math.ceil(totalCount / limit)
+
+    if (totalCount > 0) {
+      return ctx.response.json({
+        status: 200,
+        data,
+        pagination: {
+          page,
+          limit,
+          totalCount,
+          totalPages,
+        },
+      })
+    }
+
+    // if (data.length < realTotal) {
+    try {
+      let allComments: Daum[] = []
+      let page = 1
+      let total = 0
+
+      do {
+        const result = await scrapeComments(url(page, 2000), id)
+
+        if (result.code !== 200) {
+          return ctx.response.json({ status: 200, error: 'Failed to scrape comments' })
+        }
+
+        const comments = result.data?.data || []
+        total = result.data?.total || 0
+
+        if (comments.length === 0) {
+          return ctx.response.json({ status: 200, error: 'No comments found' })
+        }
+
+        if (comments.length > 0) {
+          allComments = [...allComments, ...comments]
+        } else {
+          break
+        }
+        page++
+        console.log('Total:', total, 'Current:', allComments.length)
+      } while (allComments.length < total)
+
+      CommentsWorker.queue.add({ data: allComments })
+      allComments = allComments.slice(0, limit)
+      return ctx.response.json({ status: 200, data: allComments })
+    } catch (error) {}
+    // }
   }
 }

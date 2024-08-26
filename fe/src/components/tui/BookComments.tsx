@@ -1,39 +1,68 @@
-import { Comment } from '@/types/book'
-import Image from 'next/image'
+'use client'
+import { TuiCommentT } from '@/types/tui_comment'
 import { decodeHTMLEntities } from '@/utils/decodeHTMLEntities'
 import ReactMarkdown from 'react-markdown'
 import remarkBreaks from 'remark-breaks'
+import { getTuiComment } from '@/server/getTuiComment'
+import { useQuery } from '@tanstack/react-query'
+import { useQueryParams } from '@/hooks/useQuery'
+import { z } from 'zod'
+import AppPagination from '@/components/tui/pagination/AppPagination'
+import { useSearchParams } from 'next/navigation'
 
 type BookCoreProps = {
-  item: Comment[]
+  id: number
 }
-export function BookComment ({ item }: BookCoreProps) {
+
+export function BookComment ({ id }: BookCoreProps) {
+  const searchParams = useSearchParams()
+  const page = Number(searchParams.get('page')) || 1
+  const limit = Number(searchParams.get('limit')) || 10
+
+  const { queryParams, setQueryParams } = useQueryParams({
+    schema: z.object({
+      page: z.number().optional(),
+      limit: z.number().optional()
+    }),
+    defaultValues: {}
+  })
+
+  const { data, isError, isPending } = useQuery<TuiCommentT>({
+    queryKey: ['tui', 'comment', id, page, limit],
+    queryFn: () => getTuiComment(page, limit, id)
+  })
+
+  if (isPending) {
+    return <h3>Loading...</h3>
+  }
+
+  if (isError) {
+    return null
+  }
+
+  if (!data) {
+    return null
+  }
+
   return (
     <div className='space-y-4'>
-      {item.map(comment => {
+      {data.data.map(comment => {
         let formattedMessage: string = ''
-        if (comment.message) {
-          const decodedMessage = decodeHTMLEntities(comment.message)
-          formattedMessage = decodedMessage?.replace(/<br\/>/g, '\n') ?? '' // use nullish coalescing operator
+        if (comment.content) {
+          const decodedMessage = decodeHTMLEntities(comment.content)
+          formattedMessage = decodedMessage?.replace(/<br\/>/g, '\n') ?? ''
         }
 
         return (
           <article
-            key={comment.id}
+            key={comment.score_id}
             className={`p-4 rounded-lg bg-slate-100 dark:bg-[#161616] prose-md dark:prose-p:text-gray-400 prose-h3:font-bold max-w-prose sm:max-w-full`}
           >
-            {/* <footer className='flex justify-between items-center mb-2'>
-              <div className='flex items-center'>
-                <p className='inline-flex items-center mr-3 prose-lg'>
-                  {comment.username}
-                </p>
-              </div>
-            </footer> */}
             <div className='grid grid-flow-row auto-rows-max gap-y-2'>
-              <h3 className='first-letter:uppercase'>{comment.username}</h3>
+              <h3 className='first-letter:uppercase'>
+                {comment.user.nickname}
+              </h3>
               <p>
-                {/* <p className='text-gray-500 dark:text-gray-400 normal-case'> */}
-                {/* <div className='prose-sm prose-p:text-gray-400'> */}
                 <ReactMarkdown
                   remarkPlugins={[remarkBreaks]}
                   className='indent-0 first-letter:uppercase'
@@ -45,6 +74,9 @@ export function BookComment ({ item }: BookCoreProps) {
           </article>
         )
       })}
+      <div className='flex justify-center'>
+        <AppPagination data={data.pagination} setQueryParams={setQueryParams} />
+      </div>
     </div>
   )
 }

@@ -31,24 +31,6 @@ export class TaskWorker {
     }
     return TaskWorker.instance
   }
-  //   static get queue () {
-  //     return new Bull('book-list', {
-  //       redis: {
-  //         host: redisConfig.connections.main.host,
-  //         port: redisConfig.connections.main.port,
-  //         password: redisConfig.connections.main.password,
-  //         maxRetriesPerRequest: null, // Ensure that Redis does not exhaust all clients on retries
-  //         enableReadyCheck: false, // Disable ready check for faster reconnects
-  //       },
-  //       defaultJobOptions: {
-  //         attempts: 3, // Retry up to 3 times
-  //         backoff: {
-  //           type: 'exponential',
-  //           delay: 5000, // Delay between retries (5 seconds)
-  //         },
-  //       },
-  //     })
-  //   }
 
   static async handle (job: any) {
     try {
@@ -87,8 +69,6 @@ export class TaskWorker {
     }
   }
 }
-
-// TaskWorker.queue.process(TaskWorker.handle)
 
 TaskWorker.queue.process(TaskWorker.handle)
 

@@ -14,17 +14,27 @@ type BookCoreProps = {
 
 export function BookDescription ({ item }: BookCoreProps) {
   const [showMore, setShowMore] = useState(false)
-  const [maxHeight, setMaxHeight] = useState('0px')
+  //   const [text, setText] = useState('Show More')
+  //   const [maxHeight, setMaxHeight] = useState('0px')
   const contentRef = useRef<HTMLDivElement>(null)
+  const [maxHeight, setMaxHeight] = useState('120px')
 
-  useEffect(() => {
-    if (contentRef.current) {
-      setMaxHeight(showMore ? `${contentRef.current.scrollHeight}px` : '120px')
-    }
-  }, [showMore])
+  //   useEffect(() => {
+  //     if (contentRef.current) {
+  //       setMaxHeight(showMore ? `${contentRef.current.scrollHeight}px` : '120px')
+  //     }
+  //   }, [showMore])
 
+  //   const handleToggle = () => {
+  //     // setShowMore(prevShowMore => !prevShowMore)
+  //     setShowMore(!showMore)
+  //     setText(showMore ? 'Show More' : 'Show Less')
+  //   }
   const handleToggle = () => {
-    setShowMore(prevShowMore => !prevShowMore)
+    if (contentRef.current) {
+      setMaxHeight(showMore ? '120px' : `${contentRef.current.scrollHeight}px`)
+    }
+    setShowMore(!showMore)
   }
 
   if (!item.info) {
@@ -45,10 +55,10 @@ export function BookDescription ({ item }: BookCoreProps) {
     ?.replace(/(！”)/g, '$1\n\n') // Add newline after '！”'
     ?.replace(/(？”|！”|。”)/g, '$1\n\n')
 
+  console.log(showMore)
   return (
     <div className='bg-transparent rounded-lg'>
       <div className='prose-sm md:prose-xl rounded-md my-2 md:my-0 md:py-4'>
-        {/* <p>Description: </p> */}
         <div
           ref={contentRef}
           className='transition-max-height duration-300 ease-in-out overflow-hidden'
